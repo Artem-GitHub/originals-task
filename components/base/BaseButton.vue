@@ -1,15 +1,24 @@
 <script lang="ts" setup>
-  const emit = defineEmits<{(e: 'click', event: Event): void}>();
+const props = withDefaults(
+  defineProps<{
+    type?: 'button' | 'submit' | 'reset' | undefined,
+  }>(),
+  {
+    type: 'button',
+  },
+);
 
-  function onClick (event: Event): void {
-    emit('click', event);
-  };
+const emit = defineEmits<{(e: 'click', event: Event): void}>();
+
+function onClick (event: Event): void {
+  emit('click', event);
+};
 </script>
 
 <template>
   <button
     class="base-button"
-    type="button"
+    :type="props.type"
     @click="onClick"
   >
     <slot />
@@ -21,8 +30,8 @@
   display: flex
   align-items: center
   justify-content: center
-  height: 32px
-  background-color: $primary-400
+  height: 36px
+  background-color: $primary-500
   border-radius: 8px
   transition: background-color 0.25s ease
   font-size: 16px
@@ -30,8 +39,8 @@
   padding: 0 12px
 
   &:hover
-    background-color: $primary-300
+    background-color: $primary-400
 
   &:active
-    background-color: $primary-500
+    background-color: $primary-600
 </style>
