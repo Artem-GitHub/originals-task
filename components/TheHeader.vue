@@ -1,9 +1,17 @@
+<script lang="ts" setup>
+const taskStore = useTaskStore();
+
+function showTaskModal (): void {
+  taskStore.toggleTaskModalVisibility(true);
+};
+</script>
+
 <template>
   <header class="header">
     <div class="header__logo">Logo</div>
 
     <div class="header__actions">
-      <BaseButton>Create</BaseButton>
+      <BaseButton @click="showTaskModal">Create</BaseButton>
     </div>
   </header>
 </template>

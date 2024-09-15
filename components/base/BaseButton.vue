@@ -1,7 +1,16 @@
+<script lang="ts" setup>
+  const emit = defineEmits<{(e: 'click', event: Event): void}>();
+
+  function onClick (event: Event): void {
+    emit('click', event);
+  };
+</script>
+
 <template>
   <button
     class="base-button"
     type="button"
+    @click="onClick"
   >
     <slot />
   </button>
