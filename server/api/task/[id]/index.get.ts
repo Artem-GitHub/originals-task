@@ -1,7 +1,7 @@
 import { taskService } from '@/server/services';
 import type { ResponseTaskType } from '@/types';
 
-export default defineEventHandler((event): ResponseTaskType | void => {
+export default defineEventHandler((event) => {
   const taskId: string | undefined = getRouterParam(event, 'id');
 
   if (!taskId) {

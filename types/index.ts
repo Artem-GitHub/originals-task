@@ -11,7 +11,7 @@ interface DatabaseInterface {
 };
 
 type TaskModelType = {
-  id: string,
+  id?: string,
   title: string;
   description: string | null;
   author: string;
@@ -21,7 +21,7 @@ type TaskModelType = {
 };
 
 type TaskModelPatchType = Partial<TaskModelType>;
-type ResponseTaskType = TaskModelType;
+type ResponseTaskType = TaskModelType & { id: string };
 type ResponseTaskListType = Array<ResponseTaskType>;
 
 export enum Status {

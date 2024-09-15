@@ -2,7 +2,7 @@ import { taskService } from '@/server/services';
 import { Status, Priority } from '@/types';
 import type { TaskModelType } from '@/types';
 
-export default defineEventHandler(async (event): Promise<TaskModelType | void> => {
+export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
   const payload: TaskModelType = {

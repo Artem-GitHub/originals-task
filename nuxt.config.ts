@@ -28,6 +28,11 @@ export default defineNuxtConfig({
       },
     },
   },
+  runtimeConfig: {
+    public: {
+      VITE_BASE_API_URL: process.env.VITE_BASE_API_URL,
+    },
+  },
   devServer: { port: 3000 },
   eslint: {
     checker: true,
