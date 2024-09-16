@@ -1,13 +1,10 @@
 <script lang="ts" setup>
-const props = withDefaults(defineProps<{
-  modelValue?: boolean,
-}>(),
-  {
-    modelValue: false,
-  },
-);
+const props = defineProps<{ modelValue: boolean }>()
 
-const emit = defineEmits<{ 'update:modelValue': [isShowModal: boolean] }>()
+const emit = defineEmits<{
+  'update:modelValue': [isShowModal: boolean],
+  'on-close': [e: Event],
+}>();
 
 const isShowModal = computed<boolean>({
   get () {
@@ -18,8 +15,9 @@ const isShowModal = computed<boolean>({
   },
 });
 
-function hideModal (): void {
+function hideModal (event: Event): void {
   isShowModal.value = false;
+  emit('on-close', event);
 };
 </script>
 
@@ -70,13 +68,14 @@ function hideModal (): void {
   &__container
     display: flex
     flex-direction: column
-    flex-basis: 560px
-    background-color: $white
-    border-radius: 20px
+    row-gap: 24px
+    flex-basis: 600px
+    background-color: $secondary-50
+    border-radius: 12px
     -webkit-box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.25)
     -moz-box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.25)
     box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.25)
-    padding: 16px
+    padding: 24px
 
   &__head
     display: flex

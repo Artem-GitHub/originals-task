@@ -5,15 +5,16 @@ const props = withDefaults(
   defineProps<{
     modelValue: SelectValueType,
     options: SelectOptionsType,
-    trackBy: string,
-    name: string,
-    selectLabel: string,
     placeholder: string,
     label?: string | null,
+    trackBy?: string | null,
+    selectLabel?: string | null,
     searchable?: boolean,
   }>(),
   {
     label: null,
+    trackBy: null,
+    selectLabel: null,
     searchable: false,
   },
 );
@@ -35,13 +36,11 @@ const selectValue = computed<SelectValueType>({
     <label
       v-if="label"
       class="base-select__label"
-      :for="name"
     >
       {{ label }}
     </label>
 
     <Multiselect
-      :id="name"
       v-model="selectValue"
       :options="options"
       :track-by="trackBy"
@@ -65,6 +64,7 @@ const selectValue = computed<SelectValueType>({
     margin-bottom: 8px
 
   & :deep(.multiselect)
+    height: 36px
     min-height: 36px
     border: none
     border-radius: 6px

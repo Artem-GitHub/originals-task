@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 const props = withDefaults(
   defineProps<{
-    modelValue: string,
+    modelValue: string | null,
     name: string,
     placeholder: string,
     label?: string | null,
@@ -14,13 +14,13 @@ const props = withDefaults(
   },
 );
 
-const emit = defineEmits<{ 'update:modelValue': [inputValue: string] }>();
+const emit = defineEmits<{ 'update:modelValue': [inputValue: string | null] }>();
 
-const inputValue = computed<string>({
+const inputValue = computed<string | null>({
   get () {
     return props.modelValue;
   },
-  set (newValue: string) {
+  set (newValue: string | null) {
     emit('update:modelValue', newValue);
   },
 });

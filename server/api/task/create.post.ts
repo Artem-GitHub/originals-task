@@ -9,13 +9,13 @@ export default defineEventHandler(async (event) => {
     id: String(Date.now()),
     title: body.title || null,
     description: body.description || null,
-    author: body.author || null,
-    performer: body.performer || null,
+    authorId: body.authorId || null,
+    performerId: body.performerId || null,
     status: body.status || Status.todo,
     priority: body.priority || Priority.low,
   };
 
-  if (!payload.title || !payload.author) {
+  if (!payload.title || !payload.authorId) {
     return setResponseStatus(event, 400);
   }
 

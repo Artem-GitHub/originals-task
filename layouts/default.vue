@@ -2,7 +2,6 @@
   <main>
     <TheHeader />
     <slot />
-    <TaskModal />
   </main>
 </template>
 

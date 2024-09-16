@@ -1,8 +1,12 @@
 <script lang="ts" setup>
-const taskStore = useTaskStore();
+import TaskCreateModal from '@/components/Task/TaskCreateModal.vue'
 
-function showTaskModal (): void {
-  taskStore.toggleTaskModalVisibility(true);
+const createTaskModalComponent = ref<typeof TaskCreateModal | null>(null);
+
+function showCreateTaskModal (): void {
+  if (createTaskModalComponent.value) {
+    createTaskModalComponent.value.openModal();
+  }
 };
 </script>
 
@@ -11,9 +15,11 @@ function showTaskModal (): void {
     <div class="header__logo">Logo</div>
 
     <div class="header__actions">
-      <BaseButton @click="showTaskModal">Create</BaseButton>
+      <BaseButton @click="showCreateTaskModal">Create</BaseButton>
     </div>
   </header>
+
+  <TaskCreateModal ref="createTaskModalComponent" />
 </template>
 
 <style lang="sass" scoped>
