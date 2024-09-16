@@ -14,8 +14,8 @@ type TaskModelType = {
   id?: string,
   title: string;
   description: string | null;
-  author: string;
-  performer: string | null;
+  authorId: string;
+  performerId: string | null;
   status: string;
   priority: string;
 };
@@ -23,6 +23,8 @@ type TaskModelType = {
 type TaskModelPatchType = Partial<TaskModelType>;
 type ResponseTaskType = TaskModelType & { id: string };
 type ResponseTaskListType = Array<ResponseTaskType>;
+type ResponseUserType = { name: string, id: string };
+type ResponseUserListType = Array<ResponseUserType>;
 
 export enum Status {
   todo = 'todo',
@@ -36,8 +38,9 @@ export enum Priority {
   hight = 'hight',
 };
 
-type SelectValueType = { [key: string]: string } | null;
-type SelectOptionsType = Array<Exclude<SelectValueType, null>>;
+type SelectValueType = { [key: string]: string } | string | null;
+type SelectOptionsType = Array<string>
+  | Array<Extract<SelectValueType, { [key: string]: string }>>;
 
 export type {
   HasIdType,
@@ -46,6 +49,8 @@ export type {
   TaskModelPatchType,
   ResponseTaskType,
   ResponseTaskListType,
+  ResponseUserType,
+  ResponseUserListType,
   SelectValueType,
   SelectOptionsType,
 };

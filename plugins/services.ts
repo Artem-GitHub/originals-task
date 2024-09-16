@@ -1,5 +1,10 @@
-import { taskService } from '@/services';
+import { taskService, userService } from '@/services';
 
 export default defineNuxtPlugin(() => {
-  return { provide: { taskService } };
+  return {
+    provide: {
+      taskService,
+      userService,
+    },
+  };
 });
