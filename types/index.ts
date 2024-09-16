@@ -36,6 +36,9 @@ export enum Priority {
   hight = 'hight',
 };
 
+type SelectValueType = { [key: string]: string } | null;
+type SelectOptionsType = Array<Exclude<SelectValueType, null>>;
+
 export type {
   HasIdType,
   DatabaseInterface,
@@ -43,4 +46,6 @@ export type {
   TaskModelPatchType,
   ResponseTaskType,
   ResponseTaskListType,
+  SelectValueType,
+  SelectOptionsType,
 };

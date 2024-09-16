@@ -2,7 +2,10 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: false },
-  css: ['@/assets/styles/index.sass'],
+  css: [
+    '@/assets/styles/index.sass',
+    'vue-multiselect/dist/vue-multiselect.min.css',
+  ],
   modules: [
     '@nuxt/eslint',
     '@nuxtjs/i18n',
