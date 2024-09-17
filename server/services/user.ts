@@ -14,4 +14,8 @@ export default class UserService {
   public getAllUsers (): ResponseUserListType {
     return this.databaseService.getAll<ResponseUserType>();
   };
+
+  public getUserById (id: string): ResponseUserType | undefined {
+    return this.databaseService.getById<ResponseUserType>(id);
+  };
 };

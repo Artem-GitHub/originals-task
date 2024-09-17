@@ -12,10 +12,12 @@ function showCreateTaskModal (): void {
 
 <template>
   <header class="header">
-    <div class="header__logo">Logo</div>
+    <div class="header__container">
+      <div class="header__logo">Logo</div>
 
-    <div class="header__actions">
-      <BaseButton @click="showCreateTaskModal">Create</BaseButton>
+      <div class="header__actions">
+        <BaseButton @click="showCreateTaskModal">Create</BaseButton>
+      </div>
     </div>
   </header>
 
@@ -26,10 +28,17 @@ function showCreateTaskModal (): void {
 .header
   display: flex
   align-items: center
-  justify-content: space-between
+  justify-content: center
   height: 72px
   background-color: $primary-800
-  padding: 0 32px
+
+  &__container
+    display: flex
+    align-items: center
+    justify-content: space-between
+    width: 100%
+    max-width: 1280px
+    padding: 0 32px
 
   &__logo
     text-transform: uppercase

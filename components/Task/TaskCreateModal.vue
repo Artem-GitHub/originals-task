@@ -38,12 +38,6 @@ watch(
   }
 );
 
-// TODO: remove this mounted
-onMounted(() => {
-  userStore.getAllUsers();
-  taskStore.getAllTasks();
-});
-
 function openModal (): void {
   isShowModal.value = true;
 };
