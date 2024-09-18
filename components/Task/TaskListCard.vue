@@ -1,15 +1,15 @@
 <script lang="ts" setup>
 import { Priority } from '@/types';
 import type {
-  ResponseUserType,
-  ResponseTaskType,
+  UserType,
+  TaskType,
 } from '@/types';
 
-const props = defineProps<{ task: ResponseTaskType }>();
+const props = defineProps<{ task: TaskType }>();
 
 const userStore = useUserStore();
 
-const user = computed<ResponseUserType | undefined>(() =>
+const user = computed<UserType | undefined>(() =>
   userStore.usersList.find((user) => user.id === props.task.performerId)
 );
 

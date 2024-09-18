@@ -1,20 +1,20 @@
 <script lang="ts" setup>
 import { Status } from '@/types';
-import type { ResponseTaskListType } from '@/types';
+import type { TaskListType } from '@/types';
 
 const taskStore = useTaskStore();
 
-const taskList = computed<ResponseTaskListType>(() => taskStore.tasksList);
+const taskList = computed<TaskListType>(() => taskStore.tasksList);
 
-const taskListTodo = computed<ResponseTaskListType>(() => 
+const taskListTodo = computed<TaskListType>(() => 
   taskList.value.filter((task) => task.status === Status.todo)
 );
 
-const taskListInProgress = computed<ResponseTaskListType>(() =>
+const taskListInProgress = computed<TaskListType>(() =>
   taskList.value.filter((task) => task.status === Status.progress)
 );
 
-const taskListDone = computed<ResponseTaskListType>(() =>
+const taskListDone = computed<TaskListType>(() =>
   taskList.value.filter((task) => task.status === Status.done)
 );
 </script>

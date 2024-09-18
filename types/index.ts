@@ -21,10 +21,10 @@ type TaskModelType = {
 };
 
 type TaskModelPatchType = Partial<TaskModelType>;
-type ResponseTaskType = TaskModelType & { id: string };
-type ResponseTaskListType = Array<ResponseTaskType>;
-type ResponseUserType = { name: string, id: string };
-type ResponseUserListType = Array<ResponseUserType>;
+type TaskType = TaskModelType & { id: string };
+type TaskListType = Array<TaskType>;
+type UserType = { name: string, id: string };
+type UserListType = Array<UserType>;
 
 export enum Status {
   todo = 'todo',
@@ -47,10 +47,10 @@ export type {
   DatabaseInterface,
   TaskModelType,
   TaskModelPatchType,
-  ResponseTaskType,
-  ResponseTaskListType,
-  ResponseUserType,
-  ResponseUserListType,
+  TaskType,
+  TaskListType,
+  UserType,
+  UserListType,
   SelectValueType,
   SelectOptionsType,
 };

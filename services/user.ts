@@ -1,14 +1,14 @@
 import FetchApi from '@/api';
-import type { ResponseUserType, ResponseUserListType } from '@/types';
+import type { UserType, UserListType } from '@/types';
 
 export default class UserService extends FetchApi {
   private RESOURCE = '/user';
 
-  public getAll (): Promise<ResponseUserListType> {
-    return this.call<ResponseUserListType>('GET', `${this.RESOURCE}`);
+  public getAll (): Promise<UserListType> {
+    return this.call<UserListType>('GET', `${this.RESOURCE}`);
   };
 
-  public getById (id: string): Promise<ResponseUserType> {
-    return this.call<ResponseUserType>('GET', `${this.RESOURCE}/${id}`);
+  public getById (id: string): Promise<UserType> {
+    return this.call<UserType>('GET', `${this.RESOURCE}/${id}`);
   };
 };

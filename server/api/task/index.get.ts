@@ -1,6 +1,6 @@
 import { taskService } from '@/server/services';
-import type { ResponseTaskListType } from '@/types';
+import type { TaskListType } from '@/types';
 
-export default defineEventHandler((): ResponseTaskListType => {
-  return taskService.getAllTasks();
+export default defineEventHandler((): TaskListType => {
+  return taskService.getAll();
 });

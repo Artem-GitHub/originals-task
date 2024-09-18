@@ -1,7 +1,7 @@
 import type {
   DatabaseInterface,
-  ResponseUserType,
-  ResponseUserListType,
+  UserType,
+  UserListType,
 } from '@/types';
 
 export default class UserService {
@@ -11,11 +11,11 @@ export default class UserService {
     this.databaseService = databaseService;
   }
 
-  public getAllUsers (): ResponseUserListType {
-    return this.databaseService.getAll<ResponseUserType>();
+  public getAll (): UserListType {
+    return this.databaseService.getAll<UserType>();
   };
 
-  public getUserById (id: string): ResponseUserType | undefined {
-    return this.databaseService.getById<ResponseUserType>(id);
+  public getById (id: string): UserType | undefined {
+    return this.databaseService.getById<UserType>(id);
   };
 };

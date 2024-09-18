@@ -1,11 +1,11 @@
 <script lang="ts" setup>
 import Sortable from 'sortablejs';
 import type { SortableEvent } from 'sortablejs';
-import type { ResponseTaskListType } from '@/types';
+import type { TaskListType } from '@/types';
 
 const props = defineProps<{
   columnTitle: string,
-  taskList: ResponseTaskListType,
+  taskList: TaskListType,
 }>();
 
 const listElement = ref<HTMLElement | null>(null);
@@ -16,7 +16,7 @@ onMounted(() => {
   }
 });
 
-function createSortable (listRef: HTMLElement, list: ResponseTaskListType): void {
+function createSortable (listRef: HTMLElement, list: TaskListType): void {
   Sortable.create(listRef, {
     group: 'tasks',
     animation: 150,
@@ -26,7 +26,7 @@ function createSortable (listRef: HTMLElement, list: ResponseTaskListType): void
   });
 };
 
-function updateList (event: SortableEvent, list: ResponseTaskListType) {
+function updateList (event: SortableEvent, list: TaskListType) {
   const { oldIndex, newIndex } = event;
 
   if (oldIndex && newIndex) {

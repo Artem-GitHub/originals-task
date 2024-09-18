@@ -3,8 +3,8 @@ import type { Form } from 'vee-validate';
 
 import type {
   TaskModelType,
-  ResponseUserListType,
-  ResponseUserType,
+  UserListType,
+  UserType,
 } from '@/types';
 
 import { Status, Priority } from '@/types';
@@ -25,9 +25,9 @@ const taskForm = reactive<TaskModelType>({
 
 const statusesList: Array<string> = Object.values(Status);
 const prioritiesList: Array<string> = Object.values(Priority);
-const selectedUser = ref<ResponseUserType | null>(null);
+const selectedUser = ref<UserType | null>(null);
 
-const usersList = computed<ResponseUserListType>(() => userStore.usersList);
+const usersList = computed<UserListType>(() => userStore.usersList);
 
 watch(
   () => selectedUser.value,

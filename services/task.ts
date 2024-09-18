@@ -2,30 +2,30 @@ import FetchApi from '@/api';
 import type {
   TaskModelType,
   TaskModelPatchType,
-  ResponseTaskType,
-  ResponseTaskListType,
+  TaskType,
+  TaskListType,
 } from '@/types';
 
 export default class TaskService extends FetchApi {
   private RESOURCE = '/task';
 
-  public getAll (): Promise<ResponseTaskListType> {
-    return this.call<ResponseTaskListType>('GET', `${this.RESOURCE}`);
+  public getAll (): Promise<TaskListType> {
+    return this.call<TaskListType>('GET', `${this.RESOURCE}`);
   };
 
-  public getById (id: string): Promise<ResponseTaskType> {
-    return this.call<ResponseTaskType>('GET', `${this.RESOURCE}/${id}`);
+  public getById (id: string): Promise<TaskType> {
+    return this.call<TaskType>('GET', `${this.RESOURCE}/${id}`);
   };
 
-  public create (payload: TaskModelType): Promise<ResponseTaskType> {
-    return this.call<ResponseTaskType>('POST', `${this.RESOURCE}/create`, payload);
+  public create (payload: TaskModelType): Promise<TaskType> {
+    return this.call<TaskType>('POST', `${this.RESOURCE}/create`, payload);
   };
 
-  public update (id: string, payload: TaskModelPatchType): Promise<ResponseTaskType> {
-    return this.call<ResponseTaskType>('PATCH', `${this.RESOURCE}/${id}`, payload);
+  public update (id: string, payload: TaskModelPatchType): Promise<TaskType> {
+    return this.call<TaskType>('PATCH', `${this.RESOURCE}/${id}`, payload);
   };
 
-  public delete (id: string): Promise<ResponseTaskType> {
-    return this.call<ResponseTaskType>('DELETE', `${this.RESOURCE}/${id}`);
+  public delete (id: string): Promise<TaskType> {
+    return this.call<TaskType>('DELETE', `${this.RESOURCE}/${id}`);
   };
 };

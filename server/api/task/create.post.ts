@@ -20,6 +20,6 @@ export default defineEventHandler(async (event) => {
   }
 
   setResponseStatus(event, 201);
-  const task: TaskModelType = taskService.createTask(payload);
+  const task: TaskModelType = taskService.create(payload);
   return task;
 });

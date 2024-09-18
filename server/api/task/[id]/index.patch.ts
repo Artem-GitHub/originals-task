@@ -1,5 +1,5 @@
 import { taskService } from '@/server/services';
-import type { ResponseTaskType } from '@/types';
+import type { TaskType } from '@/types';
 
 export default defineEventHandler(async (event) => {
   const taskId: string | undefined = getRouterParam(event, 'id');
@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
   }
 
   const body = await readBody(event);
-  const task: ResponseTaskType | undefined = taskService.updateTask(taskId, body);
+  const task: TaskType | undefined = taskService.update(taskId, body);
 
   if (!task) {
     return setResponseStatus(event, 404);

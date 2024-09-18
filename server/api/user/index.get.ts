@@ -1,6 +1,6 @@
 import { userService } from '@/server/services';
-import type { ResponseUserListType } from '@/types';
+import type { UserListType } from '@/types';
 
-export default defineEventHandler((): ResponseUserListType => {
-  return userService.getAllUsers();
+export default defineEventHandler((): UserListType => {
+  return userService.getAll();
 });

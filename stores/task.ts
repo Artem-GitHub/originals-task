@@ -2,29 +2,29 @@ import { taskService } from '@/services';
 
 import type {
   TaskModelType,
-  ResponseTaskType,
-  ResponseTaskListType,
+  TaskType,
+  TaskListType,
 } from '@/types';
 
 export const useTaskStore = defineStore('task', {
   state: () => ({
-    tasksList: [] as ResponseTaskListType,
+    tasksList: [] as TaskListType,
   }),
 
   actions: {
-    setTasksList (data: ResponseTaskListType): void {
+    setTasksList (data: TaskListType): void {
       if (Array.isArray(data)) {
         this.tasksList = [...data];
       }
     },
 
-    addTaskToList (data: ResponseTaskType) {
+    addTaskToList (data: TaskType) {
       this.tasksList.push({ ...data });
     },
 
-    async getAllTasks (): Promise<ResponseTaskListType | undefined> {
+    async getAllTasks (): Promise<TaskListType | undefined> {
       try {
-        const response: ResponseTaskListType = await taskService.getAll();
+        const response: TaskListType = await taskService.getAll();
 
         this.setTasksList(response);
         return response;
@@ -33,9 +33,9 @@ export const useTaskStore = defineStore('task', {
       }
     },
 
-    async createTask (payload: TaskModelType): Promise<ResponseTaskType | undefined> {
+    async createTask (payload: TaskModelType): Promise<TaskType | undefined> {
       try {
-        const response: ResponseTaskType = await taskService.create(payload);
+        const response: TaskType = await taskService.create(payload);
 
         if (response) {
           this.addTaskToList(response);

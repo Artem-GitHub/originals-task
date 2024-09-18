@@ -1,5 +1,5 @@
 import { taskService } from '@/server/services';
-import type { ResponseTaskType } from '@/types';
+import type { TaskType } from '@/types';
 
 export default defineEventHandler((event) => {
   const taskId: string | undefined = getRouterParam(event, 'id');
@@ -8,7 +8,7 @@ export default defineEventHandler((event) => {
     return setResponseStatus(event, 400);
   }
 
-  const task: ResponseTaskType | undefined = taskService.deleteTask(taskId);
+  const task: TaskType | undefined = taskService.delete(taskId);
 
   if (!task) {
     return setResponseStatus(event, 404);

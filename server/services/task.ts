@@ -2,8 +2,8 @@ import type {
   DatabaseInterface,
   TaskModelType,
   TaskModelPatchType,
-  ResponseTaskType,
-  ResponseTaskListType,
+  TaskType,
+  TaskListType,
 } from '@/types';
 
 export default class TaskService {
@@ -13,23 +13,23 @@ export default class TaskService {
     this.databaseService = databaseService;
   }
 
-  public getAllTasks (): ResponseTaskListType {
-    return this.databaseService.getAll<ResponseTaskType>();
+  public getAll (): TaskListType {
+    return this.databaseService.getAll<TaskType>();
   };
 
-  public getTaskById (id: string): ResponseTaskType | undefined {
-    return this.databaseService.getById<ResponseTaskType>(id);
+  public getById (id: string): TaskType | undefined {
+    return this.databaseService.getById<TaskType>(id);
   };
 
-  public createTask (payload: TaskModelType): TaskModelType {
+  public create (payload: TaskModelType): TaskModelType {
     return this.databaseService.create<TaskModelType>(payload);
   };
 
-  public updateTask (id: string, payload: TaskModelPatchType): ResponseTaskType | undefined {
-    return this.databaseService.update<TaskModelPatchType, ResponseTaskType>(id, payload);
+  public update (id: string, payload: TaskModelPatchType): TaskType | undefined {
+    return this.databaseService.update<TaskModelPatchType, TaskType>(id, payload);
   };
 
-  public deleteTask (id: string): ResponseTaskType | undefined {
-    return this.databaseService.delete<ResponseTaskType>(id);
+  public delete (id: string): TaskType | undefined {
+    return this.databaseService.delete<TaskType>(id);
   };
 };

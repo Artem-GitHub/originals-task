@@ -1,21 +1,21 @@
 import { userService } from '@/services';
-import type { ResponseUserType, ResponseUserListType } from '@/types';
+import type { UserType, UserListType } from '@/types';
 
 export const useUserStore = defineStore('user', {
   state: () => ({
-    usersList: [] as ResponseUserListType,
+    usersList: [] as UserListType,
   }),
 
   actions: {
-    setUsersList (data: ResponseUserListType) {
+    setUsersList (data: UserListType) {
       if (Array.isArray(data)) {
         this.usersList = [...data];
       }
     },
 
-    async getAllUsers (): Promise<ResponseUserListType | undefined> {
+    async getAllUsers (): Promise<UserListType | undefined> {
       try {
-        const response: ResponseUserListType = await userService.getAll();
+        const response: UserListType = await userService.getAll();
         this.usersList = response;
         return response;
       } catch (error) {
@@ -23,9 +23,9 @@ export const useUserStore = defineStore('user', {
       }
     },
 
-    async getUserById (id: string): Promise<ResponseUserType | undefined> {
+    async getUserById (id: string): Promise<UserType | undefined> {
       try {
-        const response: ResponseUserType = await userService.getById(id);
+        const response: UserType = await userService.getById(id);
         return response;
       } catch (error) {
         console.error(error);
