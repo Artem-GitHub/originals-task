@@ -14,7 +14,7 @@ type TaskModelType = {
   id?: string,
   title: string;
   description: string | null;
-  authorId: string;
+  authorId: string | null;
   performerId: string | null;
   status: string;
   priority: string;
@@ -42,6 +42,12 @@ type SelectValueType = { [key: string]: string } | string | null;
 type SelectOptionsType = Array<string>
   | Array<Extract<SelectValueType, { [key: string]: string }>>;
 
+type ModalStateType = {
+  isShowTaskCreateModal: boolean;
+  isShowTaskEditModal: boolean;
+  isShowConfirmModal: boolean;
+};
+
 export type {
   HasIdType,
   DatabaseInterface,
@@ -53,4 +59,5 @@ export type {
   UserListType,
   SelectValueType,
   SelectOptionsType,
+  ModalStateType,
 };

@@ -15,7 +15,7 @@ export default defineEventHandler(async (event) => {
     priority: body.priority || Priority.low,
   };
 
-  if (!payload.title || !payload.authorId) {
+  if (!payload.title) {
     return setResponseStatus(event, 400);
   }
 

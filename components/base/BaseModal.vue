@@ -1,9 +1,18 @@
 <script lang="ts" setup>
-const props = defineProps<{ modelValue: boolean }>()
+const props = withDefaults(
+  defineProps<{
+    modelValue: boolean
+    isLoading?: boolean
+  }>(),
+  {
+    isLoading: false,
+  }
+);
 
 const emit = defineEmits<{
   'update:modelValue': [isShowModal: boolean],
-  'on-close': [e: Event],
+  'on-open': [value: boolean],
+  'on-close': [value: boolean],
 }>();
 
 const isShowModal = computed<boolean>({
@@ -15,9 +24,19 @@ const isShowModal = computed<boolean>({
   },
 });
 
-function hideModal (event: Event): void {
+watch(
+  () => isShowModal.value,
+  (newValue: boolean) => {
+    if (newValue) {
+      emit('on-open', newValue);
+    } else {
+      emit('on-close', newValue);
+    }
+  }
+);
+
+function hideModal (): void {
   isShowModal.value = false;
-  emit('on-close', event);
 };
 </script>
 
@@ -28,27 +47,35 @@ function hideModal (event: Event): void {
     @click.self="hideModal"
   >
     <div class="base-modal__container">
-      <div class="base-modal__head">
-        <h4 class="base-modal__title">
-          <slot name="title" />
-        </h4>
+      <template v-if="isLoading">
+        <div class="base-modal__loader">
+          Loading...
+        </div>
+      </template>
 
-        <button
-          class="base-modal__close-button"
-          type="button"
-          @click="hideModal"
-        >
-          &#10006;
-        </button>
-      </div>
+      <template v-else>
+        <div class="base-modal__head">
+          <h4 class="base-modal__title">
+            <slot name="title" />
+          </h4>
 
-      <div class="base-modal__body">
-        <slot name="body" />
-      </div>
+          <button
+            class="base-modal__close-button"
+            type="button"
+            @click="hideModal"
+          >
+            &#10006;
+          </button>
+        </div>
 
-      <div class="base-modal__footer">
-        <slot name="footer" />
-      </div>
+        <div class="base-modal__body">
+          <slot name="body" />
+        </div>
+
+        <div class="base-modal__footer">
+          <slot name="footer" />
+        </div>
+      </template>
     </div>
   </div>
 </template>
@@ -68,7 +95,6 @@ function hideModal (event: Event): void {
   &__container
     display: flex
     flex-direction: column
-    row-gap: 24px
     flex-basis: 600px
     background-color: $secondary-50
     border-radius: 12px
@@ -76,11 +102,24 @@ function hideModal (event: Event): void {
     -moz-box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.25)
     box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.25)
     padding: 24px
+    max-height: 96%
+    overflow-y: auto
+
+  &__loader
+    text-align: center
+    font-size: 28px
+    color: $secondary-800
+    padding: 32px
 
   &__head
     display: flex
     align-items: center
     justify-content: space-between
+
+  &__body
+    flex: 1
+    padding: 24px 0
+    // overflow: auto
 
   &__title
     color: $black

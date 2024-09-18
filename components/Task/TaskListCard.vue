@@ -7,7 +7,9 @@ import type {
 
 const props = defineProps<{ task: TaskType }>();
 
+const appStore = useAppStore();
 const userStore = useUserStore();
+const taskStore = useTaskStore();
 
 const user = computed<UserType | undefined>(() =>
   userStore.usersList.find((user) => user.id === props.task.performerId)
@@ -27,11 +29,19 @@ const statusColor = computed<string>(() => {
       return 'grey';
   }
 });
+
+function openTaskEditModal (): void {
+  appStore.toggleModalVisibility('isShowTaskEditModal', true);
+  taskStore.taskEditId = props.task.id;
+};
 </script>
 
 <template>
-  <div class="task-list-card">
-    <div class="task-list-card__heading">
+  <div
+    class="task-list-card"
+    @click="openTaskEditModal"
+  >
+    <div class="task-list-card__heading">     
       <h4 class="task-list-card__title">{{ props.task.title }}</h4>
     </div>
 

@@ -48,7 +48,6 @@ const selectValue = computed<SelectValueType>({
       :placeholder="placeholder"
       :searchable="searchable"
       :show-labels="false"
-      open-direction="bottom"
     />
   </div>
 </template>

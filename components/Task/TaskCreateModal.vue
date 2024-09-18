@@ -9,10 +9,10 @@ import type {
 
 import { Status, Priority } from '@/types';
 
+const appStore = useAppStore();
 const userStore = useUserStore();
 const taskStore = useTaskStore();
 
-const isShowModal = ref<boolean>(false);
 const formElement = ref<typeof Form | null>(null);
 const taskForm = reactive<TaskModelType>({
   title: '',
@@ -25,12 +25,21 @@ const taskForm = reactive<TaskModelType>({
 
 const statusesList: Array<string> = Object.values(Status);
 const prioritiesList: Array<string> = Object.values(Priority);
-const selectedUser = ref<UserType | null>(null);
-
+const selectedAuthor = ref<UserType | null>(null);
+const selectedPerformer = ref<UserType | null>(null);
 const usersList = computed<UserListType>(() => userStore.usersList);
 
 watch(
-  () => selectedUser.value,
+  () => selectedAuthor.value,
+  (newValue) => {
+    if (newValue) {
+      taskForm.authorId = newValue.id;
+    }
+  }
+);
+
+watch(
+  () => selectedPerformer.value,
   (newValue) => {
     if (newValue) {
       taskForm.performerId = newValue.id;
@@ -38,17 +47,14 @@ watch(
   }
 );
 
-function openModal (): void {
-  isShowModal.value = true;
-};
-
 function resetTaskForm (): void {
-  selectedUser.value = null;
   taskForm.title = '';
   taskForm.description = '';
   taskForm.performerId = null;
   taskForm.status = Status.todo;
   taskForm.priority = Priority.low;
+  selectedAuthor.value = null;
+  selectedPerformer.value = null;
 };
 
 async function submitForm (): Promise<void> {
@@ -68,18 +74,16 @@ async function submitForm (): Promise<void> {
       } finally {
         resetTaskForm();
         resetForm();
-        isShowModal.value = false;
+        appStore.toggleModalVisibility('isShowTaskCreateModal', false);
       }
     }
   }
 };
-
-defineExpose({ openModal });
 </script>
 
 <template>
   <BaseModal
-    v-model="isShowModal"
+    v-model="appStore.modal.isShowTaskCreateModal"
     @on-close="resetTaskForm"
   >
     <template #title>
@@ -110,7 +114,16 @@ defineExpose({ openModal });
         />
 
         <BaseSelect
-          v-model="selectedUser"
+          v-model="selectedAuthor"
+          :options="usersList"
+          track-by="id"
+          select-label="name"
+          placeholder="Select author"
+          label="Author"
+        />
+
+        <BaseSelect
+          v-model="selectedPerformer"
           :options="usersList"
           track-by="id"
           select-label="name"

@@ -5,6 +5,9 @@
     <div class="main__container">
       <slot />
     </div>
+
+    <TaskCreateModal />
+    <TaskEditModal />
   </main>
 </template>
 

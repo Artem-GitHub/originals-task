@@ -42,33 +42,28 @@ export default class DatabaseService implements DatabaseInterface {
   };
 
   public update<M, R extends HasIdType> (id: string, payload: M): R | undefined{
+    const data: Array<R> = this.getAll<R>();
+
+    const resultData: Array<R> = data.map((item: R) => {
+      if (item.id === id) {
+        return { ...item, ...payload }
+      } else {
+        return item;
+      }
+    });
+
+    this.saveData<R>(resultData);
+
     const item: R | undefined = this.getById<R>(id);
-
-    if (item) {
-      const data: Array<R> = this.getAll<R>();
-      const resultData: Array<R> = data.map((item: R) => {
-        if (item.id === id) {
-          return { ...item, ...payload }
-        } else {
-          return item;
-        }
-      });
-
-      this.saveData<R>(resultData);
-    }
-
     return item;
   };
 
   public delete<R extends HasIdType> (id: string): R | undefined {
     const item: R | undefined = this.getById<R>(id);
+    const data: Array<R> = this.getAll<R>();
+    const resultdata: Array<R> = data.filter((item: R) => item.id !== id);
 
-    if (item) {
-      const data: Array<R> = this.getAll<R>();
-      const resultdata: Array<R> = data.filter((item: R) => item.id !== id);
-
-      this.saveData<R>(resultdata);
-    }
+    this.saveData<R>(resultdata);
 
     return item;
   };
