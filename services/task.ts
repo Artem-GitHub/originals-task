@@ -7,7 +7,7 @@ import type {
 } from '@/types';
 
 export default class TaskService extends FetchApi {
-  private RESOURCE = '/task';
+  private RESOURCE = '/api/task';
 
   public getAll (): Promise<TaskListType> {
     return this.call<TaskListType>('GET', `${this.RESOURCE}`);

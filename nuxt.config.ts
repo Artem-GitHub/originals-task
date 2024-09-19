@@ -27,6 +27,7 @@ export default defineNuxtConfig({
       preprocessorOptions: {
         sass: {
           additionalData: '@use "@/assets/styles/imports/_index.sass" as *\n',
+          silenceDeprecations: ["legacy-js-api"],
         },
       },
     },
