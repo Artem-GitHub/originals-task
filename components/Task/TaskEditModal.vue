@@ -27,6 +27,8 @@ const taskForm = reactive<TaskModelType>({
   priority: Priority.low,
 });
 const task = ref<TaskType | null | undefined>(null);
+const isLoadingEdit = ref<boolean>(false);
+const isLoadingDelete = ref<boolean>(false);
 const isLoadingTaskData = ref<boolean>(true);
 
 const statusesList: Array<string> = Object.values(Status);
@@ -34,6 +36,17 @@ const prioritiesList: Array<string> = Object.values(Priority);
 const selectedAuthor = ref<UserType | null>(null);
 const selectedPerformer = ref<UserType | null>(null);
 const usersList = computed<UserListType>(() => userStore.usersList);
+
+const saveIsDisabled = computed<boolean>(() => {
+  return Object.entries(taskForm)
+    .every(([key, value]) => {
+      const taskKey = key as keyof TaskType
+
+      if (task.value) {
+        return task.value[taskKey] === value;
+      }
+    });
+});
 
 watch(
   () => selectedAuthor.value,
@@ -141,6 +154,8 @@ async function submitForm (): Promise<void> {
     const isValid: boolean = response.valid;
 
     if (isValid && task.value) {
+      isLoadingEdit.value = true
+
       try {
         await taskStore.updateTask(task.value.id, { ...taskForm });
         $toast.success('Task edited successfully');
@@ -148,6 +163,7 @@ async function submitForm (): Promise<void> {
         const err = error as FetchError;
         $toast.error(err?.response?.statusText || 'Unknown error');
       } finally {
+        isLoadingEdit.value = false
         resetForm();
         closeModal();
       }
@@ -156,7 +172,11 @@ async function submitForm (): Promise<void> {
 };
 
 async function deleteTask (): Promise<void> {
+  closeConfirmModal();
+
   if (task.value) {
+    isLoadingDelete.value = true
+
     try {
       await taskStore.deleteTask(task.value.id);
       $toast.success('Task deleted successfully');
@@ -164,7 +184,7 @@ async function deleteTask (): Promise<void> {
       const err = error as FetchError;
       $toast.error(err?.response?.statusText || 'Unknown error');
     } finally {
-      closeConfirmModal();
+      isLoadingDelete.value = false
       closeModal();
     }
   }
@@ -250,11 +270,18 @@ async function deleteTask (): Promise<void> {
         </BaseButton>
 
         <div class="task-edit-modal__actions-main">
-          <BaseButton @click="openConfirmModal">
+          <BaseButton
+            :loading="isLoadingDelete"
+            @click="openConfirmModal"
+          >
             Delete
           </BaseButton>
 
-          <BaseButton @click="submitForm">
+          <BaseButton
+            :loading="isLoadingEdit"
+            :disabled="saveIsDisabled"
+            @click="submitForm"
+          >
             Save
           </BaseButton>
         </div>

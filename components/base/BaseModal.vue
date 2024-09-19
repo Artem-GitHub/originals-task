@@ -41,52 +41,63 @@ function hideModal (): void {
 </script>
 
 <template>
-  <div
-    v-if="isShowModal"
-    class="base-modal"
-    @click.self="hideModal"
-  >
-    <div class="base-modal__container">
-      <template v-if="isLoading">
-        <div class="base-modal__loader">
-          Loading...
-        </div>
-      </template>
+  <transition name="modal">
+    <div
+      v-if="isShowModal"
+      class="base-modal"
+      @click.self="hideModal"
+    >
+      <div class="base-modal__container">
+        <template v-if="isLoading">
+          <div class="base-modal__loader">
+            Loading...
+          </div>
+        </template>
 
-      <template v-else>
-        <div class="base-modal__head">
-          <h4 class="base-modal__title">
-            <slot name="title" />
-          </h4>
+        <template v-else>
+          <div class="base-modal__head">
+            <h4 class="base-modal__title">
+              <slot name="title" />
+            </h4>
 
-          <button
-            class="base-modal__close-button"
-            type="button"
-            @click="hideModal"
-          >
-            &#10006;
-          </button>
-        </div>
+            <button
+              class="base-modal__close-button"
+              type="button"
+              @click="hideModal"
+            >
+              &#10006;
+            </button>
+          </div>
 
-        <div class="base-modal__body">
-          <slot name="body" />
-        </div>
+          <div class="base-modal__body">
+            <slot name="body" />
+          </div>
 
-        <div class="base-modal__footer">
-          <slot name="footer" />
-        </div>
-      </template>
+          <div class="base-modal__footer">
+            <slot name="footer" />
+          </div>
+        </template>
+      </div>
     </div>
-  </div>
+  </transition>
 </template>
 
 <style lang="sass" scoped>
+.modal-enter-active,
+.modal-leave-active
+  transition: opacity 0.5s ease
+
+.modal-enter-from,
+.modal-leave-to
+  opacity: 0
+
 .base-modal
   position: fixed
   display: flex
   align-items: center
   justify-content: center
   background-color: #00000020
+  padding: 24px
   top: 0
   right: 0
   bottom: 0
@@ -102,7 +113,7 @@ function hideModal (): void {
     -moz-box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.25)
     box-shadow: 0px 8px 20px 0px rgba(0,0,0,0.25)
     padding: 24px
-    max-height: 96%
+    max-height: 100%
     overflow-y: auto
 
   &__loader
@@ -119,7 +130,6 @@ function hideModal (): void {
   &__body
     flex: 1
     padding: 24px 0
-    // overflow: auto
 
   &__title
     color: $black

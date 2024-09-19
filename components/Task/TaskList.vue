@@ -44,6 +44,11 @@ const taskListDone = computed<TaskListType>(() =>
 <style lang="sass" scoped>
 .task-list
   display: flex
-  column-gap: 24px
+  flex-direction: column
+  row-gap: 24px
   margin-top: 24px
+
+  @include media-breakpoint-up(sm)
+    flex-direction: row
+    column-gap: 24px
 </style>

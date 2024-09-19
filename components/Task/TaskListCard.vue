@@ -72,6 +72,7 @@ function openTaskEditModal (): void {
 .task-list-card
   display: flex
   flex-direction: column
+  width: 240px
   background-color: $white
   border-radius: 8px
   -webkit-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.25)
@@ -79,6 +80,9 @@ function openTaskEditModal (): void {
   box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.25)
   transition: 0.25s ease
   cursor: pointer
+
+  @include media-breakpoint-up(sm)
+    width: unset
 
   &:hover
     -webkit-box-shadow: 0px 4px 8px 0px rgba(0,0,0,0.25)

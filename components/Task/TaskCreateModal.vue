@@ -31,6 +31,7 @@ const prioritiesList: Array<string> = Object.values(Priority);
 const selectedAuthor = ref<UserType | null>(null);
 const selectedPerformer = ref<UserType | null>(null);
 const usersList = computed<UserListType>(() => userStore.usersList);
+const isLoading = ref<boolean>(false);
 
 watch(
   () => selectedAuthor.value,
@@ -50,6 +51,10 @@ watch(
   }
 );
 
+function closeModal (): void {
+  appStore.toggleModalVisibility('isShowTaskCreateModal', false);
+};
+
 function resetTaskForm (): void {
   taskForm.title = '';
   taskForm.description = '';
@@ -68,6 +73,8 @@ async function submitForm (): Promise<void> {
     const isValid: boolean = response.valid;
 
     if (isValid) {
+      isLoading.value = true;
+
       try {
         await taskStore.createTask({ ...taskForm });
         $toast.success('Task created successfully');
@@ -75,9 +82,10 @@ async function submitForm (): Promise<void> {
         const err = error as FetchError;
         $toast.error(err?.response?.statusText || 'Unknown error');
       } finally {
+        isLoading.value = false;
         resetTaskForm();
         resetForm();
-        appStore.toggleModalVisibility('isShowTaskCreateModal', false);
+        closeModal();
       }
     }
   }
@@ -152,7 +160,17 @@ async function submitForm (): Promise<void> {
 
     <template #footer>
       <div class="task-form__actions">
-        <BaseButton @click="submitForm">
+        <BaseButton
+          button-style="text"
+          @click="closeModal"
+        >
+          Cancel
+        </BaseButton>
+
+        <BaseButton
+          :loading="isLoading"
+          @click="submitForm"
+        >
           Create
         </BaseButton>
       </div>
@@ -169,5 +187,5 @@ async function submitForm (): Promise<void> {
   &__actions
     display: flex
     align-items: center
-    justify-content: flex-end
+    justify-content: space-between
 </style>
