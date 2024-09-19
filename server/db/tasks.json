@@ -5,7 +5,7 @@
     "description": "Task 1 description",
     "authorId": "1",
     "performerId": "1",
-    "status": "todo",
+    "status": "progress",
     "priority": "low"
   },
   {
@@ -14,7 +14,7 @@
     "description": "Description Task 2",
     "authorId": "1",
     "performerId": "2",
-    "status": "progress",
+    "status": "todo",
     "priority": "medium"
   },
   {
@@ -32,7 +32,7 @@
     "description": "Task 4 description",
     "authorId": "1",
     "performerId": "1",
-    "status": "todo",
+    "status": "done",
     "priority": "low"
   }
 ]

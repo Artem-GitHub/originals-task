@@ -2,6 +2,7 @@ import { taskService } from '@/services';
 
 import type {
   TaskModelType,
+  TaskModelPatchType,
   TaskType,
   TaskListType,
 } from '@/types';
@@ -31,6 +32,14 @@ export const useTaskStore = defineStore('task', {
     deleteTaskFromList (id: string): void {
       const findTaskIndex = this.tasksList.findIndex((task) => task.id === id);
       this.tasksList.splice(findTaskIndex, 1);
+    },
+
+    setTaskStatus (id: string, status: string): void {
+      const findTask = this.tasksList.find((task) => task.id === id);
+
+      if (findTask) {
+        findTask.status = status;
+      }
     },
 
     async getAllTasks (): Promise<TaskListType | undefined> {
@@ -66,7 +75,7 @@ export const useTaskStore = defineStore('task', {
       }
     },
 
-    async updateTask (id: string, payload: TaskModelType): Promise<TaskType | undefined> {
+    async updateTask (id: string, payload: TaskModelPatchType): Promise<TaskType | undefined> {
       try {
         const response: TaskType = await taskService.update(id, payload);
 
@@ -77,6 +86,7 @@ export const useTaskStore = defineStore('task', {
         return response;
       } catch (error) {
         console.error(error);
+        throw error;
       }
     },
 

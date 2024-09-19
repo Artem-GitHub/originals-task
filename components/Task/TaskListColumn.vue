@@ -1,38 +1,48 @@
 <script lang="ts" setup>
 import Sortable from 'sortablejs';
 import type { SortableEvent } from 'sortablejs';
-import type { TaskListType } from '@/types';
+import type { Status, TaskListType } from '@/types';
 
 const props = defineProps<{
+  listType: Status,
   columnTitle: string,
   taskList: TaskListType,
 }>();
 
 const listElement = ref<HTMLElement | null>(null);
+const taskStore = useTaskStore();
 
 onMounted(() => {
   if (listElement.value) {
-    createSortable(listElement.value, props.taskList);
+    createSortable(listElement.value);
   }
 });
 
-function createSortable (listRef: HTMLElement, list: TaskListType): void {
-  Sortable.create(listRef, {
-    group: 'tasks',
-    animation: 150,
-    onEnd: (event: SortableEvent) => {
-      updateList(event, list);
-    },
-  });
+async function changeTaskStatus (event: SortableEvent): Promise<void> {
+  const { item, from, to } = event;
+  const taskId: string = item.id;
+  const oldStatus = from.id;
+  const newStatus = to.id;
+
+  taskStore.setTaskStatus(taskId, newStatus);
+
+  try {
+    await taskStore.updateTask(taskId, { status: newStatus });
+  } catch (error) {
+    // TODO: show error alert
+    console.error(error);
+    taskStore.setTaskStatus(taskId, oldStatus);
+  }
 };
 
-function updateList (event: SortableEvent, list: TaskListType) {
-  const { oldIndex, newIndex } = event;
-
-  if (oldIndex && newIndex) {
-    const movedItem = list.splice(oldIndex, 1)[0];
-    list.splice(newIndex, 0, movedItem);
-  }
+function createSortable (element: HTMLElement): void {
+  new Sortable(element, {
+    group: 'tasks',
+    animation: 500,
+    onAdd: (event: SortableEvent) => {
+      changeTaskStatus(event);
+    },
+  });
 };
 </script>
 
@@ -45,6 +55,7 @@ function updateList (event: SortableEvent, list: TaskListType) {
     </div>
 
     <div
+      :id="props.listType"
       ref="listElement"
       class="task-list-column__list"
     >
@@ -67,6 +78,7 @@ function updateList (event: SortableEvent, list: TaskListType) {
   -moz-box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.25)
   box-shadow: 0px 2px 4px 0px rgba(0,0,0,0.25)
   border-radius: 12px
+  align-self: flex-start
 
   &__heading
     background-color: $primary-400
@@ -81,7 +93,9 @@ function updateList (event: SortableEvent, list: TaskListType) {
   &__list
     display: flex
     flex-direction: column
-    height: 100%
     row-gap: 16px
     padding: 16px
+
+.sortable-ghost
+  opacity: 0.5
 </style>

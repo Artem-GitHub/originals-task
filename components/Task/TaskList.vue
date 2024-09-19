@@ -6,7 +6,7 @@ const taskStore = useTaskStore();
 
 const taskList = computed<TaskListType>(() => taskStore.tasksList);
 
-const taskListTodo = computed<TaskListType>(() => 
+const taskListTodo = computed<TaskListType>(() =>
   taskList.value.filter((task) => task.status === Status.todo)
 );
 
@@ -23,16 +23,19 @@ const taskListDone = computed<TaskListType>(() =>
   <div class="task-list">
     <TaskListColumn
       column-title="TODO"
+      :list-type="Status.todo"
       :task-list="taskListTodo"
     />
 
     <TaskListColumn
       column-title="In progress"
+      :list-type="Status.progress"
       :task-list="taskListInProgress"
     />
 
     <TaskListColumn
       column-title="done"
+      :list-type="Status.done"
       :task-list="taskListDone"
     />
   </div>

@@ -37,30 +37,32 @@ function openTaskEditModal (): void {
 </script>
 
 <template>
-  <div
-    class="task-list-card"
-    @click="openTaskEditModal"
-  >
-    <div class="task-list-card__heading">     
-      <h4 class="task-list-card__title">{{ props.task.title }}</h4>
-    </div>
-
-    <div class="task-list-card__content">
-      <div class="task-list-card__info">
-        <span class="task-list-card__info-title">Performer</span>
-        <span class="task-list-card__info-value">{{ userName }}</span>
+  <div :id="props.task.id">
+    <div
+      class="task-list-card"
+      @click="openTaskEditModal"
+    >
+      <div class="task-list-card__heading">     
+        <h4 class="task-list-card__title">{{ props.task.title }}</h4>
       </div>
 
-      <div class="task-list-card__info">
-        <span class="task-list-card__info-title">Priority</span>
-        <span class="task-list-card__info-value task-list-card__info-value_priority">
-          {{ props.task.priority }}
-        </span>
-      </div>
+      <div class="task-list-card__content">
+        <div class="task-list-card__info">
+          <span class="task-list-card__info-title">Performer</span>
+          <span class="task-list-card__info-value">{{ userName }}</span>
+        </div>
 
-      <div class="task-list-card__info">
-        <span class="task-list-card__info-title">Status</span>
-        <span class="task-list-card__info-value">{{ props.task.status }}</span>
+        <div class="task-list-card__info">
+          <span class="task-list-card__info-title">Priority</span>
+          <span class="task-list-card__info-value task-list-card__info-value_priority">
+            {{ props.task.priority }}
+          </span>
+        </div>
+
+        <div class="task-list-card__info">
+          <span class="task-list-card__info-title">Status</span>
+          <span class="task-list-card__info-value">{{ props.task.status }}</span>
+        </div>
       </div>
     </div>
   </div>

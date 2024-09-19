@@ -10,6 +10,18 @@ interface DatabaseInterface {
   delete<R extends HasIdType> (id: string): R | undefined;
 };
 
+export enum Status {
+  todo = 'todo',
+  progress = 'progress',
+  done = 'done',
+};
+
+export enum Priority {
+  low = 'low',
+  medium = 'medium',
+  hight = 'hight',
+};
+
 type TaskModelType = {
   id?: string,
   title: string;
@@ -25,18 +37,6 @@ type TaskType = TaskModelType & { id: string };
 type TaskListType = Array<TaskType>;
 type UserType = { name: string, id: string };
 type UserListType = Array<UserType>;
-
-export enum Status {
-  todo = 'todo',
-  progress = 'progress',
-  done = 'done',
-};
-
-export enum Priority {
-  low = 'low',
-  medium = 'medium',
-  hight = 'hight',
-};
 
 type SelectValueType = { [key: string]: string } | string | null;
 type SelectOptionsType = Array<string>
