@@ -2,6 +2,18 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+## Run app instruction
+
+1 - `git clone https://github.com/Artem-GitHub/originals-task.git`
+
+2 - install dependencies use command - `npm install`
+
+3 - create `.env` config file in app folder with `VITE_BASE_API_URL=http://localhost:3000` like in .env.example file in repo
+
+4 - run `npm run dev` in terminal
+
+5 - Go to `http://localhost:3000` in your browser
+
 ## Setup
 
 Make sure to install the dependencies:
