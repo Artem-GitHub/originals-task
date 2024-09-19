@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Form } from 'vee-validate';
+import type { FetchError } from 'ofetch';
 
 import type {
   TaskModelType,
@@ -8,6 +9,8 @@ import type {
 } from '@/types';
 
 import { Status, Priority } from '@/types';
+
+const { $toast } = useNuxtApp();
 
 const appStore = useAppStore();
 const userStore = useUserStore();
@@ -67,10 +70,10 @@ async function submitForm (): Promise<void> {
     if (isValid) {
       try {
         await taskStore.createTask({ ...taskForm });
-        // TODO: show success alert
+        $toast.success('Task created successfully');
       } catch (error) {
-        // TODO: show error alert
-        console.error(error);
+        const err = error as FetchError;
+        $toast.error(err?.response?.statusText || 'Unknown error');
       } finally {
         resetTaskForm();
         resetForm();

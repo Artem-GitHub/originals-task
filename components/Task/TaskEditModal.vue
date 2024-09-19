@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import type { Form } from 'vee-validate';
+import type { FetchError } from 'ofetch';
 
 import type {
   TaskModelType,
@@ -13,6 +14,8 @@ import { Status, Priority } from '@/types';
 const appStore = useAppStore();
 const taskStore = useTaskStore();
 const userStore = useUserStore();
+
+const { $toast } = useNuxtApp();
 
 const formElement = ref<typeof Form | null>(null);
 const taskForm = reactive<TaskModelType>({
@@ -121,11 +124,11 @@ async function getTask (id: string): Promise<void> {
       setSelectsValues(task.value);
       isLoadingTaskData.value = false;
     } else {
-      throw new Error('Some error');
+      throw new Error;
     }
   } catch (error) {
-    // TODO: show error alert
-    console.error(error);
+    const err = error as FetchError;
+    $toast.error(err?.response?.statusText || 'Unknown error');
     closeModal();
   }
 };
@@ -140,10 +143,10 @@ async function submitForm (): Promise<void> {
     if (isValid && task.value) {
       try {
         await taskStore.updateTask(task.value.id, { ...taskForm });
-        // TODO: show success alert
+        $toast.success('Task edited successfully');
       } catch (error) {
-        // TODO: show error alert
-        console.error(error);
+        const err = error as FetchError;
+        $toast.error(err?.response?.statusText || 'Unknown error');
       } finally {
         resetForm();
         closeModal();
@@ -156,10 +159,10 @@ async function deleteTask (): Promise<void> {
   if (task.value) {
     try {
       await taskStore.deleteTask(task.value.id);
-      // TODO: show success alert
+      $toast.success('Task deleted successfully');
     } catch (error) {
-      // TODO: show error alert
-      console.error(error);
+      const err = error as FetchError;
+      $toast.error(err?.response?.statusText || 'Unknown error');
     } finally {
       closeConfirmModal();
       closeModal();

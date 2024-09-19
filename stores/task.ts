@@ -49,6 +49,7 @@ export const useTaskStore = defineStore('task', {
         return response;
       } catch (error) {
         console.error(error);
+        throw error;
       }
     },
 
@@ -58,6 +59,7 @@ export const useTaskStore = defineStore('task', {
         return response;
       } catch (error) {
         console.error(error);
+        throw error;
       }
     },
 
@@ -72,6 +74,7 @@ export const useTaskStore = defineStore('task', {
         return response;
       } catch (error) {
         console.error(error);
+        throw error;
       }
     },
 
@@ -101,6 +104,7 @@ export const useTaskStore = defineStore('task', {
         return response;
       } catch (error) {
         console.error(error);
+        throw error;
       }
     },
   },

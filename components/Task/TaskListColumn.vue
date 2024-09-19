@@ -2,12 +2,15 @@
 import Sortable from 'sortablejs';
 import type { SortableEvent } from 'sortablejs';
 import type { Status, TaskListType } from '@/types';
+import type { FetchError } from 'ofetch';
 
 const props = defineProps<{
   listType: Status,
   columnTitle: string,
   taskList: TaskListType,
 }>();
+
+const { $toast } = useNuxtApp();
 
 const listElement = ref<HTMLElement | null>(null);
 const taskStore = useTaskStore();
@@ -29,8 +32,8 @@ async function changeTaskStatus (event: SortableEvent): Promise<void> {
   try {
     await taskStore.updateTask(taskId, { status: newStatus });
   } catch (error) {
-    // TODO: show error alert
-    console.error(error);
+    const err = error as FetchError;
+    $toast.error(err?.response?.statusText || 'Unknown error');
     taskStore.setTaskStatus(taskId, oldStatus);
   }
 };
